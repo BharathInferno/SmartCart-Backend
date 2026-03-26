@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: shopper
+  ai:
+    vertex:
+      ai:
+        gemini:
+          project-id: gcp-abs-zz853-3c-sbx-prj-01
+          location: us-central1
+          credentials-uri: classpath:gcp-service-account.json
+
