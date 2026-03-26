@@ -9,7 +9,6 @@ import com.albertsons.shopper.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -80,7 +79,7 @@ public class OrderService {
                         .build())
                 .toList();
         return OrderResponse.builder()
-                .orderId(String.valueOf(order.getId()))
+                .id(String.valueOf(order.getId()))
                 .status(order.getStatus())
                 .items(items)
                 .total(order.getTotal())

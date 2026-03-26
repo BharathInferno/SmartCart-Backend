@@ -3,17 +3,17 @@
 -- =============================================
 
 -- Categories
-INSERT INTO categories (id, name, image, description, item_count) VALUES
-(1, 'Fruits & Vegetables', 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400', 'Fresh, organic fruits and vegetables', 48),
-(2, 'Dairy & Eggs', 'https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=400', 'Farm-fresh dairy products and eggs', 32),
-(3, 'Bakery', 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400', 'Freshly baked breads, cakes, and pastries', 28),
-(4, 'Meat & Seafood', 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400', 'Premium quality meats and fresh seafood', 36),
-(5, 'Snacks & Chips', 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400', 'Tasty snacks for every craving', 44),
-(6, 'Beverages', 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400', 'Refreshing drinks and juices', 38),
-(7, 'Frozen Foods', 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400', 'Convenient frozen meals and treats', 30),
-(8, 'Pantry Staples', 'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400', 'Essential cooking ingredients and staples', 52),
-(9, 'Deli & Prepared', 'https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=400', 'Ready-to-eat deli meats and prepared foods', 24),
-(10, 'Organic & Natural', 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400', 'Certified organic and natural products', 40);
+INSERT INTO categories (id, name, slug, image, description, item_count) VALUES
+(1, 'Fruits & Vegetables', 'fruits-vegetables', 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400', 'Fresh, organic fruits and vegetables', 48),
+(2, 'Dairy & Eggs', 'dairy-eggs', 'https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=400', 'Farm-fresh dairy products and eggs', 32),
+(3, 'Bakery', 'bakery', 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400', 'Freshly baked breads, cakes, and pastries', 28),
+(4, 'Meat & Seafood', 'meat-seafood', 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=400', 'Premium quality meats and fresh seafood', 36),
+(5, 'Snacks & Chips', 'snacks', 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400', 'Tasty snacks for every craving', 44),
+(6, 'Beverages', 'beverages', 'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=400', 'Refreshing drinks and juices', 38),
+(7, 'Frozen Foods', 'frozen-foods', 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=400', 'Convenient frozen meals and treats', 30),
+(8, 'Pantry Staples', 'pantry', 'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400', 'Essential cooking ingredients and staples', 52),
+(9, 'Deli & Prepared', 'deli', 'https://images.unsplash.com/photo-1539252554453-80ab65ce3586?w=400', 'Ready-to-eat deli meats and prepared foods', 24),
+(10, 'Organic & Natural', 'organic', 'https://images.unsplash.com/photo-1542838132-92c53300491e?w=400', 'Certified organic and natural products', 40);
 SELECT setval('categories_id_seq', 10);
 
 -- Products (p001=1 ... p072=72)
