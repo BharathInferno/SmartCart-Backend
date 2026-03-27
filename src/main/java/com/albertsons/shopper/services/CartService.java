@@ -49,7 +49,6 @@ public class CartService {
                 .build();
     }
 
-    @Transactional
     public Map<String, Object> addItem(String email, Long productId, int quantity) {
         User user = findUser(email);
         Cart cart = getOrCreateCart(user);
@@ -65,7 +64,6 @@ public class CartService {
         return Map.of("productId", String.valueOf(productId), "quantity", item.getQuantity(), "added", true);
     }
 
-    @Transactional
     public Map<String, Object> updateItem(String email, Long productId, int quantity) {
         User user = findUser(email);
         Cart cart = getOrCreateCart(user);
@@ -78,7 +76,6 @@ public class CartService {
         return Map.of("productId", String.valueOf(productId), "quantity", quantity, "updated", true);
     }
 
-    @Transactional
     public Map<String, Object> removeItem(String email, Long productId) {
         User user = findUser(email);
         Cart cart = getOrCreateCart(user);

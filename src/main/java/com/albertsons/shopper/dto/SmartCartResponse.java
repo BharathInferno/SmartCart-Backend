@@ -20,6 +20,8 @@ public class SmartCartResponse {
         private LocalDate predictedNeed;
         private ProductDto product;
         private SponsoredProductDto sponsoredAlternative;
+        private Double priceAdvantage;
+        private String sponsoredReason;
     }
 }
 

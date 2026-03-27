@@ -31,8 +31,15 @@ public class SmartCartItem {
 
     private LocalDate predictedNeed;
 
+    private Double confidence;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sponsored_alternative_id")
     private SponsoredProduct sponsoredAlternative;
+
+    private Double priceAdvantage;
+
+    @Column(columnDefinition = "varchar(500)")
+    private String sponsoredReason;
 }
 

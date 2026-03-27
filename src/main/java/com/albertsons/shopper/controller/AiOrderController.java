@@ -1,9 +1,5 @@
 package com.albertsons.shopper.controller;
 
-
-
-
-import com.albertsons.shopper.ai.OrderAnalyticsTools;
 import com.albertsons.shopper.ai.OrderApiTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/ai")
 public class AiOrderController {
-
 
     private final ChatClient chatClient;
     private final OrderApiTools orderApiTools;

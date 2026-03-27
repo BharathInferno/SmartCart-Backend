@@ -15,6 +15,9 @@ public class Category {
     @Column(nullable = false, unique = true, columnDefinition = "varchar(255)")
     private String name;
 
+    @Column(nullable = false, unique = true, columnDefinition = "varchar(100)")
+    private String slug;
+
     @Column(columnDefinition = "varchar(500)")
     private String image;
 

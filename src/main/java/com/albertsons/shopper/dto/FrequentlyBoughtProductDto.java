@@ -1,7 +1,5 @@
 package com.albertsons.shopper.dto;
 
-import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

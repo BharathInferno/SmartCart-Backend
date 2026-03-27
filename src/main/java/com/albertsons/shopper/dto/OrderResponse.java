@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class OrderResponse {
-    private String orderId;
+    private String id;
     private String status;
     private List<OrderItemDto> items;
     private BigDecimal total;
