@@ -196,6 +196,21 @@ public class SmartCartService {
                 }
             }
 
+            // Fallback: if AI didn't find a sponsored alternative, use the pre-seeded
+            // relatedProduct FK — guaranteed match for all products in the catalog
+            if (item.getSponsoredAlternative() == null) {
+                allSponsored.stream()
+                        .filter(sp -> sp.getRelatedProduct() != null
+                                && sp.getRelatedProduct().getId().equals(product.getId()))
+                        .findFirst()
+                        .ifPresent(sp -> {
+                            item.setSponsoredAlternative(sp);
+                            double saving = product.getPrice().subtract(sp.getPrice()).doubleValue();
+                            item.setPriceAdvantage(saving > 0 ? saving : null);
+                            item.setSponsoredReason(sp.getTagline());
+                        });
+            }
+
             saved.add(smartCartItemRepository.save(item));
         }
         log.info("Populated {} SmartCart items from AI for user={}", saved.size(), user.getEmail());

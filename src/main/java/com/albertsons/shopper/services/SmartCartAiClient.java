@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -23,7 +24,10 @@ public class SmartCartAiClient {
     private final String baseUrl;
 
     public SmartCartAiClient(@Value("${smartcart.ai.base-url:http://localhost:8000}") String baseUrl) {
-        this.restTemplate = new RestTemplate();
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(3_000);  // 3 s to connect
+        factory.setReadTimeout(30_000);    // 30 s to read (2 Flash calls ~5 s each)
+        this.restTemplate = new RestTemplate(factory);
         this.baseUrl = baseUrl;
     }
 
@@ -85,6 +89,7 @@ public class SmartCartAiClient {
         log.info("Calling AI predict-cart for user={} with {} history entries", userId, orderHistory.size());
         try {
             List<Map<String, Object>> historyMaps = orderHistory.stream()
+                    .limit(50)   // cap payload — heuristics only need last ~50 entries
                     .map(e -> Map.<String, Object>of(
                             "product_name", e.productName(),
                             "quantity", e.quantity(),
