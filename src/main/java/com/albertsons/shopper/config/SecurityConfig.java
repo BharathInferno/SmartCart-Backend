@@ -3,7 +3,6 @@ package com.albertsons.shopper.config;
 import com.albertsons.shopper.security.JwtAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,22 +35,8 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Auth - public
-                .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/register").permitAll()
-                // Products - public
-                .requestMatchers(HttpMethod.GET, "/products", "/products/**").permitAll()
-                // Categories - public
-                .requestMatchers(HttpMethod.GET, "/categories").permitAll()
-                // Banners - public
-                .requestMatchers(HttpMethod.GET, "/banners").permitAll()
-                // Deals - public
-                .requestMatchers(HttpMethod.GET, "/deals").permitAll()
-                // Swagger
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                // Existing AI endpoints
-                .requestMatchers("/api/**").permitAll()
-                // Everything else requires auth
-                .anyRequest().authenticated()
+                // Allow all requests — dummy auth mode
+                .anyRequest().permitAll()
             )
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
@@ -70,9 +55,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*"));
+        config.setAllowedOriginPatterns(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;

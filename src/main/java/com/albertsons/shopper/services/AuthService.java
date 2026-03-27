@@ -5,7 +5,6 @@ import com.albertsons.shopper.model.User;
 import com.albertsons.shopper.repository.UserRepository;
 import com.albertsons.shopper.security.JwtUtil;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,44 +24,46 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthResponse register(RegisterRequest req) {
-        if (userRepository.existsByEmail(req.getEmail())) {
-            throw new RuntimeException("Email already registered");
-        }
-        User user = User.builder()
-                .firstName(req.getFirstName())
-                .lastName(req.getLastName())
-                .email(req.getEmail())
-                .password(passwordEncoder.encode(req.getPassword()))
+    private UserDto dummyUser() {
+        return UserDto.builder()
+                .id("u001")
+                .firstName("Sarah")
+                .lastName("Johnson")
+                .email("sarah.johnson@email.com")
+                .loyaltyPoints(2450)
+                .tier("Gold")
+                .preferredStore("Albertsons #1234 - Downtown")
                 .build();
-        user = userRepository.save(user);
-        String token = jwtUtil.generateToken(user.getEmail());
-        return AuthResponse.builder().user(UserDto.from(user)).token(token).build();
+    }
+
+    public AuthResponse register(RegisterRequest req) {
+        // Dummy: always succeed, return mock user + token
+        String token = jwtUtil.generateToken("sarah.johnson@email.com");
+        UserDto user = dummyUser();
+        if (req.getFirstName() != null) user.setFirstName(req.getFirstName());
+        if (req.getLastName() != null) user.setLastName(req.getLastName());
+        if (req.getEmail() != null) user.setEmail(req.getEmail());
+        return AuthResponse.builder().user(user).token(token).build();
     }
 
     public AuthResponse login(LoginRequest req) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
-        User user = userRepository.findByEmail(req.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        String token = jwtUtil.generateToken(user.getEmail());
-        return AuthResponse.builder().user(UserDto.from(user)).token(token).build();
+        // Dummy: always succeed, return mock user + token
+        String token = jwtUtil.generateToken("sarah.johnson@email.com");
+        return AuthResponse.builder().user(dummyUser()).token(token).build();
     }
 
     public UserDto getMe(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        return UserDto.from(user);
+        // Dummy: return mock user
+        return dummyUser();
     }
 
     public UserDto updateMe(String email, UserDto updates) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        // Dummy: return mock user with updates applied
+        UserDto user = dummyUser();
         if (updates.getFirstName() != null) user.setFirstName(updates.getFirstName());
         if (updates.getLastName() != null) user.setLastName(updates.getLastName());
         if (updates.getPreferredStore() != null) user.setPreferredStore(updates.getPreferredStore());
-        user = userRepository.save(user);
-        return UserDto.from(user);
+        return user;
     }
 }
 
